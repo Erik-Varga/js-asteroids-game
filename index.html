@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Asteroids Javascript</title>
+
+    <!-- Favicon -->
+      <link rel="icon" type="image/icon" href="favicon.ico">
+  
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+
+  <body>
+      <h1>
+        Asteroids
+        <i class="fa-solid fa-gamepad"></i>
+      </h1>
+
+        <!-- width="700" height="500" -->
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="controls" hidden>
+          <div>
+            <button class="btn turn" id="leftTurnBtn">L</button>
+            <button class="btn thrust" id="leftThrustBtn">T</button>
+            <button class="btn fire" id="leftFireBtn">F</button>
+          </div>
+          <div>
+            <button class="btn fire" id="rightFireBtn">F</button>
+            <button class="btn thrust" id="rightThrustBtn">T</button>
+            <button class="btn turn" id="rightTurnBtn">R</button>
+          </div>
+        </div>
+
+      <footer>
+        <div class="version">
+          <small>
+              <a href="https://github.com/Erik-Varga/js-asteroids-game/" target="_blank">Source Code: </a> 
+            v1.0
+          </small>
+        </div>
+        <div>
+            <small>
+              <a href="https://github.com/Erik-Varga" target="_blank">&copy; <script>document.write(new Date().getFullYear())</script> Erik Varga | Web Developer <i class="fa-brands fa-github"></i></a>
+            </small>
+        </div>
+      </footer>
+    </div>
+
+  <script src="js/script.js"></script>
+  </body>
+</html>
