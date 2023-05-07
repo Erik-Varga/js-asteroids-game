@@ -20,42 +20,45 @@
   </head>
 
   <body>
-      <h1>
+      <h3 class="title">
+        <i class="fa-solid fa-meteor"></i>
         Asteroids
         <i class="fa-solid fa-gamepad"></i>
-      </h1>
+      </h3>
 
         <!-- width="700" height="500" -->
         <canvas id="gameCanvas"></canvas>
 
-        <div class="controls" hidden>
-          <div>
-            <button class="btn turn" id="leftTurnBtn">L</button>
-            <button class="btn thrust" id="leftThrustBtn">T</button>
-            <button class="btn fire" id="leftFireBtn">F</button>
+        <div class="controls">
+          <div class="btn">
+            <span><i id="turnLeft" class="fa-regular fa-circle-left"></i></i></span>
+            <span><i id="forwardLeft" class="fa-solid fa-up-long"></i></span>
+            <span><i id="fireLeft" class="fa-solid fa-gun"></i></span>
+            <span><i class="fa-solid fa-user-astronaut"></i></span>
+            <span><i id="fireRight" class="fa-solid fa-gun"></i></span>
+            <span><i id="forwardRight" class="fa-solid fa-up-long"></i></span>
+            <span><i id="turnRight" class="fa-regular fa-circle-right"></i></span>
           </div>
-          <div>
-            <button class="btn fire" id="rightFireBtn">F</button>
-            <button class="btn thrust" id="rightThrustBtn">T</button>
-            <button class="btn turn" id="rightTurnBtn">R</button>
-          </div>
-        </div>
-
-      <footer>
-        <div class="version">
-          <small>
-              <a href="https://github.com/Erik-Varga/js-asteroids-game/" target="_blank">Source Code: </a> 
-            v1.0
-          </small>
         </div>
         <div>
-            <small>
+        </div>
+      <footer>
+        <div class="version">
+          <span>
+          <small>
+              <a href="https://github.com/Erik-Varga/js-asteroids-game/" target="_blank">
+                Source Code: </a> 
+                v1.0
               <a href="https://github.com/Erik-Varga" target="_blank">&copy; <script>document.write(new Date().getFullYear())</script> Erik Varga | Web Developer <i class="fa-brands fa-github"></i></a>
             </small>
+          </span>
         </div>
       </footer>
     </div>
 
-  <script src="js/script.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="js/script.js"></script>
   </body>
 </html>

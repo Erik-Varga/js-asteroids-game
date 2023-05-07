@@ -1,7 +1,7 @@
 // Variables
 
 const FPS = 30; // Frames per second
-const FRICTION = 0.25; // friction coefficient of space (0 = no friction, 1 = lots of friction)
+const FRICTION = 0.05; // friction coefficient of space (0 = no friction, 1 = lots of friction)
 const SHIP_SIZE = 25; // ship height in px
 const SHIP_THRUST = 5; // ship thrust in px per second
 const TURN_SPEED = 360; // turn speed in deg per second
@@ -12,7 +12,7 @@ const TURN_SPEED = 360; // turn speed in deg per second
 var canv = document.getElementById('gameCanvas');
 canv.width = document.body.clientWidth;
 canv.height = window.innerHeight;
-canv.height -= 140;
+canv.height -= 175;
 
 var ctx = canv.getContext('2d');
 
@@ -34,11 +34,72 @@ var ship = {
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
 
-
 // Game Loop
 setInterval(update, 1000 / FPS);
 
 // Functions
+
+function leftBtn() {
+    ship.rotation = TURN_SPEED / 180 * Math.PI / FPS;
+}
+
+function rightBtn() {
+    ship.rotation = -TURN_SPEED / 180 * Math.PI / FPS;
+}
+function thrustBtn() {
+    ship.thrusting = true;
+}
+// Buttons
+
+$("#turnLeft").on('mousedown', function(e) {
+    ship.rotation = TURN_SPEED / 180 * Math.PI / FPS;
+});
+
+$("#turnLeft").on('mouseup', function(e) {
+    ship.rotation = 0;
+});
+
+$("#forwardLeft").on('mousedown', function(e) {
+    ship.thrusting = true;
+});
+
+$("#forwardLeft").on('mouseup', function(e) {
+    ship.thrusting = false;
+});
+
+$("#fireLeft").on('mousedown', function(e) {
+    
+});
+
+$("#fireLeft").on('mouseup', function(e) {
+    
+});
+
+// Right
+$("#turnRight").on('mousedown', function(e) {
+    ship.rotation = -TURN_SPEED / 180 * Math.PI / FPS;
+});
+
+$("#turnRight").on('mouseup', function(e) {
+    ship.rotation = 0;
+});
+
+$("#forwardRight").on('mousedown', function(e) {
+    ship.thrusting = true;
+});
+
+$("#forwardRight").on('mouseup', function(e) {
+    ship.thrusting = false;
+});
+
+$("#fireRight").on('mousedown', function(e) {
+    
+});
+
+$("#fireRight").on('mouseup', function(e) {
+    
+});
+
 
 // Keys
 function keyDown(/** @type {KeyboardEvent} */ ev) {
