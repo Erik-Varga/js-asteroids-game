@@ -12,7 +12,7 @@ const TURN_SPEED = 360; // turn speed in deg per second
 var canv = document.getElementById('gameCanvas');
 canv.width = document.body.clientWidth;
 canv.height = window.innerHeight;
-canv.height -= 175;
+canv.height -= 170;
 
 var ctx = canv.getContext('2d');
 
@@ -52,7 +52,7 @@ function thrustBtn() {
 // Buttons
 
 $("#turnLeft").on('mousedown', function(e) {
-    ship.rotation = TURN_SPEED / 180 * Math.PI / FPS;
+    leftBtn();
 });
 
 $("#turnLeft").on('mouseup', function(e) {

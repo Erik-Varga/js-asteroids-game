@@ -43,15 +43,16 @@ body {
   margin-top: 5px;
   width: 100%;
   display: flex;
-  justify-content: space-evenly;  
+  justify-content: space-between;  
 }
 
 .btn {
   display: flex;
   justify-content: center;  
+  margin: 0 auto;
   gap: 50px;
   color: whitesmoke;
-  font-size: 2rem;
+  font-size: 1.25rem;
 }
 
 .turn {
