@@ -59,10 +59,12 @@ body {
 }
 .leftBtnBox {
   justify-content: start;
+  font-size: 3rem;
 }
 
 .rightBtnBox {
   justify-content: end;
+  font-size: 3rem;
 }
 
 .btn {
