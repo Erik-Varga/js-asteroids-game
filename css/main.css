@@ -48,53 +48,45 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;  
   align-items: center;
-  font-size: 3rem;
 }
 
-.leftBtnBox {
+.leftBtnBox,
+.rightBtnBox {
   display: flex;
-  justify-content: start;
   align-items: center;
   gap: 30px;
   margin: 5px;
+}
+.leftBtnBox {
+  justify-content: start;
 }
 
 .rightBtnBox {
-  display: flex;
   justify-content: end;
-  align-items: center;
-  gap: 30px;
-  margin: 5px;
 }
 
 .btn {
-
-  gap: 50px;
+  font-size: 3rem;
   color: whitesmoke;
-  border: none;
+  border: 1px solid transparent;
 }
 
-
-
-.turn {
-  background-color: rgb(39, 221, 39);
+.btn:hover {
+  border: 1px solid whitesmoke;
 }
 
-.thrust {
-  background-color: rgb(100, 100, 233);
-}
-
-.fire {
-  background-color: rgb(233, 100, 100);
-
+.btn:active {
+  color: greenyellow;
 }
 
 footer {
-  font-family: 'Poppins', sans-serif;
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 15px;
-  font-size: 1rem;
+  padding: 5px;
+  font-size: 0.8rem;
   color: whitesmoke;
 }
 
