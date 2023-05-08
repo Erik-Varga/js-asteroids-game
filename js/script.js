@@ -46,58 +46,62 @@ function leftBtn() {
 function rightBtn() {
     ship.rotation = -TURN_SPEED / 180 * Math.PI / FPS;
 }
+
+function stopBtn() {
+    ship.rotation = 0;
+}
+
+function astronaut() {
+    return;
+}
+
 function thrustBtn() {
     ship.thrusting = true;
 }
+
+function endThrustBtn() {
+    ship.thrusting = false;
+}
+
 // Buttons
 
-$("#turnLeft").on('mousedown', function(e) {
+$("#left").on('mousedown', function(e) {
     leftBtn();
 });
 
-$("#turnLeft").on('mouseup', function(e) {
+$("#left").on('mouseup', function(e) {
     ship.rotation = 0;
 });
 
-$("#forwardLeft").on('mousedown', function(e) {
-    ship.thrusting = true;
-});
-
-$("#forwardLeft").on('mouseup', function(e) {
-    ship.thrusting = false;
-});
-
-$("#fireLeft").on('mousedown', function(e) {
-    
-});
-
-$("#fireLeft").on('mouseup', function(e) {
-    
-});
-
-// Right
-$("#turnRight").on('mousedown', function(e) {
+$("#right").on('mousedown', function(e) {
     ship.rotation = -TURN_SPEED / 180 * Math.PI / FPS;
 });
 
-$("#turnRight").on('mouseup', function(e) {
+$("#right").on('mouseup', function(e) {
     ship.rotation = 0;
 });
 
-$("#forwardRight").on('mousedown', function(e) {
+$("#astronaut").on('mousedown', function(e) {
+    
+});
+
+$("#astronaut").on('mouseup', function(e) {
+    
+});
+
+$("#fire").on('mousedown', function(e) {
+    
+});
+
+$("#fire").on('mouseup', function(e) {
+    
+});
+$("#thrust").on('mousedown', function(e) {
     ship.thrusting = true;
 });
 
-$("#forwardRight").on('mouseup', function(e) {
+$("#thrust").on('mouseup', function(e) {
     ship.thrusting = false;
-});
-
-$("#fireRight").on('mousedown', function(e) {
-    
-});
-
-$("#fireRight").on('mouseup', function(e) {
-    
 });
 
 

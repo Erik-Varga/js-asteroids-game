@@ -30,18 +30,24 @@
         <canvas id="gameCanvas"></canvas>
 
         <div class="controls">
-          <div class="btn">
+          <div class="btnControls">
             <div class="btn">
-                <span><i id="turnLeft" class="fa-regular fa-circle-left" 
-                  ontouchstart="leftBtn()" ontouchend="rightBtn"></i></i></span>
-                <span><i id="turnRight" class="fa-regular fa-circle-right" 
-                  ontouchstart="rightBtn()" ontouchend="leftBtn"></i></i></span>
+              <!-- Left -->
+                <span><i id="left" class="fa-regular fa-circle-left" 
+                  ontouchstart="leftBtn()" ontouchend="stopBtn()"></i></i></span>
+              <!-- Right -->
+                <span><i id="right" class="fa-regular fa-circle-right" 
+                  ontouchstart="rightBtn()" ontouchend="stopBtn()"></i></i></span>
             </div>
 
             <div class="btn">
-              <span><i class="fa-solid fa-user-astronaut"></i></span>
+              <!-- Astornaut -->
+              <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
+              <!-- Fire -->
               <span><i id="fire" class="fa-solid fa-gun"></i></span>
-              <span><i id="forward" class="fa-solid fa-up-long"></i></span>
+              <!-- Thrust -->
+              <span><i id="thrust" class="fa-solid fa-up-long"
+                ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></i></span>
             </div>
           </div>
 

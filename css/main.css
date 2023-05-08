@@ -37,7 +37,8 @@ body {
   border-radius: 5px
 }
 
-.controls {
+.controls,
+.btnControls {
   font-size: 2rem;
   color: whitesmoke;
   margin-top: 5px;
@@ -52,8 +53,11 @@ body {
   margin: 0 auto;
   gap: 50px;
   color: whitesmoke;
-  font-size: 1.25rem;
+  font-size: 2rem;
+  border: none;
 }
+
+
 
 .turn {
   background-color: rgb(39, 221, 39);
