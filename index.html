@@ -27,10 +27,9 @@
           Asteroids
           <i class="fa-solid fa-gamepad"></i>
         </span>
-        <span>Count=</span><span id="roidNum"></span> 
-        <span>Speed=</span><span id="roidSpeed"></span>
-        <span>X=</span><span id="shipX"></span>
-        <span>Y=</span><span id="shipY"></span>
+        
+        <!-- <span>Speed =</span><span id="roidSpeed"></span> -->
+        
       </span>
 
     </div>
@@ -47,16 +46,23 @@
                 <span class="btn"><i id="right" class="fa-regular fa-circle-right" 
                   ontouchstart="rightBtn()" ontouchend="stopBtn()"></i></i></span>
             </div>
+            <div class="settings">
+              <!-- Astornaut -->
+              <small>
+                <span class="btn"><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
+                <span>x=</span><span id="shipX">0</span>
+                <span>y=</span><span id="shipY">0</span>
+                <span>num=</span><span id="roidNum"></span> 
+              </small>
+            </div>
 
             <div class="rightBtnBox">
-              <!-- Astornaut -->
-              <span class="btn"><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
               <!-- Fire -->
               <span class="btn"><i id="fire" class="fa-solid fa-gun"></i></span>
               <!-- Thrust -->
-              <span class="btn"><i id="thrust" class="fa-solid fa-up-long"
-                ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></i></span>
+              <span class="btn"><i id="thrust" class="fa-solid fa-circle-chevron-up"ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></span>
             </div>
+            
           </div>
 
           <footer>
@@ -66,7 +72,9 @@
                   <a href="https://github.com/Erik-Varga/js-asteroids-game/" target="_blank">
                     Source Code: </a> 
                     v1.4
-                  <a href="https://github.com/Erik-Varga" target="_blank">&copy; <script>document.write(new Date().getFullYear())</script> Erik Varga | Web Developer <i class="fa-brands fa-github"></i></a>
+                  <!-- <a href="https://github.com/Erik-Varga" target="_blank"> -->
+                    &copy; <script>document.write(new Date().getFullYear())</script> Erik Varga | Web Developer <i class="fa-brands fa-github"></i>
+                  <!-- </a> -->
                 </small>
               </span>
             </div>

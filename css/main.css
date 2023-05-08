@@ -32,6 +32,10 @@ body {
 
 }
 .title {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   color: rgb(112, 112, 112);
 }
 
@@ -91,6 +95,13 @@ body {
 
 .btn:active {
   color: greenyellow;
+}
+
+.settings {
+  border: 1px solid transparent;
+  font-size: 1.3rem;
+  padding: 5px;
+  background-color: #2f383f;
 }
 
 footer {
