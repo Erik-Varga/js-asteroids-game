@@ -20,13 +20,21 @@
   </head>
 
   <body>
-      <h4 class="title">
-        <i class="fa-solid fa-meteor"></i>
-        Asteroids
-        <i class="fa-solid fa-gamepad"></i>
-      </h4>
+    <div>
+      <span class="wrapper">
+        <span class="title">
+          <i class="fa-solid fa-meteor"></i>
+          Asteroids
+          <i class="fa-solid fa-gamepad"></i>
+        </span>
+        <span>Count=</span><span id="roidNum"></span> 
+        <span>Speed=</span><span id="roidSpeed"></span>
+        <span>X=</span><span id="shipX"></span>
+        <span>Y=</span><span id="shipY"></span>
+      </span>
 
-        <!-- width="700" height="500" -->
+    </div>
+      
         <canvas id="gameCanvas"></canvas>
 
         <div class="controls">

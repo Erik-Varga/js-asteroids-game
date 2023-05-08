@@ -1,16 +1,21 @@
 // Variables
 
 const FPS = 30; // frames per second
-const FRICTION = 0.7; // friction coefficient of space (0 = no friction, 1 = lots of friction)
+const FRICTION = 0.2; // friction coefficient of space (0 = no friction, 1 = lots of friction)
 const ROID_JAG = 0.4; // jaggedness of the asteroids (0 = none, 1 = lots)
-const ROID_NUM = 3; // starting number of asteroids
+const ROID_NUM = 30; // starting number of asteroids
 const ROID_SIZE = 100; // starting size of asteroids in pixels
 const ROID_SPD = 50; // max starting speed of asteroids in pixels per second
 const ROID_VERT = 10; // average number of vertices on each asteroid
-const SHIP_SIZE = 30; // ship height in pixels
+const SHIP_SIZE = 25; // ship height in pixels
 const SHIP_THRUST = 5; // acceleration of the ship in pixels per second per second
 const SHIP_TURN_SPD = 360; // turn speed in degrees per second
 const SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
+
+const roid_num = document.getElementById('roidNum').innerHTML = ROID_NUM;
+const roid_speed = document.getElementById('roidSpeed').innerHTML = ROID_SPD;
+let ship_x = document.getElementById('shipX');
+let ship_y = document.getElementById('shipY');
 
 // Canvas
 
@@ -197,7 +202,7 @@ function update() {
         // draw the thruster
         ctx.fillStyle = '#e5fc37';
         ctx.strokeStyle = '#001717';
-        ctx.lineWidth = SHIP_SIZE / 10;
+        ctx.lineWidth = SHIP_SIZE / 11;
         ctx.beginPath();
         ctx.moveTo( // rear left
             ship.x - ship.r * (2 / 3 * Math.cos(ship.a) + 0.5 * Math.sin(ship.a)),
@@ -238,6 +243,10 @@ function update() {
     );
     ctx.closePath();
     ctx.stroke();
+
+    ship_x.innerHTML = parseInt(ship.x);
+    ship_y.innerHTML = parseInt(ship.y);
+    
 
     // draw the asteroids
     ctx.strokeStyle = "slategrey";

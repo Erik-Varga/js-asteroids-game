@@ -23,6 +23,14 @@ body {
   background: #2f363e;
 }
 
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+
+}
 .title {
   color: rgb(112, 112, 112);
 }
