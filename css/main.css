@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,600;1,700&family=Poppins&family=Quicksand&family=Raleway&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,600;1,700&family=Poppins&family=Quicksand&family=Raleway&family=Roboto&family=Nanum+Gothic+Coding:wght@400;700&&family=Space+Mono:wght@400;700&display=swap');
 
 
 :root {
-  --font: 'Roboto';
+  /* --font: 'Roboto'; */
+  --font: 'Space Mono', monospace;
+  --font: 'Nanum Gothic Coding', monospace;
 }
 
 * {
@@ -88,6 +90,7 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   padding: 5px;
   font-size: 1rem;
   color: whitesmoke;
@@ -105,11 +108,20 @@ footer a:hover {
   color: darkgray;
 }
 
-@media only screen and (max-width < 600px) {
-  .btn {
-    font-size: 2rem;
+@media only screen and (width < 600px) {
+  .leftBtnBox, .rightBtnBox {
+    margin: 0;
+    padding: 5px;
   }
+  
+  .btn {
+    display: grid;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
   footer {
-    display: none;
+    font-size: 0.9rem;
+    margin: 0 auto;
   }
 }
