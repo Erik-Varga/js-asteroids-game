@@ -60,11 +60,13 @@ body {
 .leftBtnBox {
   justify-content: start;
   font-size: 3rem;
+  padding-left: 10px;
 }
 
 .rightBtnBox {
   justify-content: end;
   font-size: 3rem;
+  padding-right: 10px;
 }
 
 .btn {
@@ -88,7 +90,7 @@ footer {
   align-items: center;
   text-align: center;
   padding: 5px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: whitesmoke;
 }
 
