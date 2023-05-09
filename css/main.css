@@ -84,7 +84,7 @@ body {
 }
 
 .btn {
-  font-size: 3rem;
+  font-size: 3.5rem;
   color: whitesmoke;
   border: 1px solid transparent;
 }
@@ -98,10 +98,27 @@ body {
 }
 
 .settings {
+  display: flex;
+  flex-direction: column;
   border: 1px solid transparent;
-  font-size: 1.3rem;
+  font-size: 2rem;
   padding: 5px;
-  background-color: #2f383f;
+}
+
+.settings .btn {
+  color: #212325;
+}
+
+.astronaut {
+  /* font-size: 3rem; */
+  color: red;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
 footer {
@@ -143,4 +160,13 @@ footer a:hover {
     font-size: 0.9rem;
     margin: 0 auto;
   }
+}
+
+
+.mystyle {
+  width: 100%;
+  padding: 25px;
+  background-color: coral;
+  color: white;
+  font-size: 25px;
 }

@@ -24,8 +24,14 @@
       <span class="wrapper">
         <span class="title">
           <i class="fa-solid fa-meteor"></i>
+          &nbsp;
           Asteroids
+          &nbsp;
           <i class="fa-solid fa-gamepad"></i>
+          <small>
+            <span>&nbsp;&nbsp;</span><span id="screenX">0</span>
+            <span> x </span><span id="screenY">0</span>
+          </small>
         </span>
         
         <!-- <span>Speed =</span><span id="roidSpeed"></span> -->
@@ -46,14 +52,15 @@
                 <span class="btn"><i id="right" class="fa-regular fa-circle-right" 
                   ontouchstart="rightBtn()" ontouchend="stopBtn()"></i></i></span>
             </div>
+
             <div class="settings">
               <!-- Astornaut -->
-              <small>
-                <span class="btn"><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
-                <span>x=</span><span id="shipX">0</span>
-                <span>y=</span><span id="shipY">0</span>
-                <span>num=</span><span id="roidNum"></span> 
-              </small>
+                <small>
+                  <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
+                  <span>x=</span><span id="shipX">0</span>
+                  <span>y=</span><span id="shipY">0</span>
+                  <span>num=</span><span id="roidNum"></span> 
+                </small>
             </div>
 
             <div class="rightBtnBox">
@@ -62,7 +69,6 @@
               <!-- Thrust -->
               <span class="btn"><i id="thrust" class="fa-solid fa-circle-chevron-up"ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></span>
             </div>
-            
           </div>
 
           <footer>
