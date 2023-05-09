@@ -55,17 +55,17 @@
 
             <div class="settings">
               <!-- Astornaut -->
-                <small>
+              <small>
                   <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
                   <span>x=</span><span id="shipX">0</span>
                   <span>y=</span><span id="shipY">0</span>
                   <span>num=</span><span id="roidNum"></span> 
-                </small>
+              </small>
             </div>
 
             <div class="rightBtnBox">
               <!-- Fire -->
-              <span class="btn"><i id="fire" class="fa-solid fa-gun"></i></span>
+              <span class="btn"><i id="fire" class="fa-solid fa-gun" ontouchstart="fireBtn()"></i></span>
               <!-- Thrust -->
               <span class="btn"><i id="thrust" class="fa-solid fa-circle-chevron-up"ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></span>
             </div>
@@ -89,9 +89,7 @@
         </div>
         <div>
         </div>
-      
     </div>
-
     
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -100,17 +100,26 @@ body {
 .settings {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid transparent;
-  font-size: 2rem;
   padding: 5px;
+}
+
+.settings {
+  font-size: 1.5rem;
 }
 
 .settings .btn {
   color: #212325;
 }
 
+.settings #astronaut {
+  font-size: 2rem;
+}
+
 .astronaut {
-  /* font-size: 3rem; */
+  font-size: 2rem;
   color: red;
   animation: blinker 1s linear infinite;
 }
@@ -160,13 +169,4 @@ footer a:hover {
     font-size: 0.9rem;
     margin: 0 auto;
   }
-}
-
-
-.mystyle {
-  width: 100%;
-  padding: 25px;
-  background-color: coral;
-  color: white;
-  font-size: 25px;
 }
