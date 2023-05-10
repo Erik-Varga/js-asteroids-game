@@ -1,5 +1,5 @@
 // Variables
-let ROID_NUM = 3; // starting number of asteroids in pixels per second
+let ROID_NUM = 1; // starting number of asteroids in pixels per second
 let GAME_LIVES = 3; // starting number of lives
 
 const FPS = 30; // frames per second
@@ -130,7 +130,7 @@ $("#thrust").on('mouseup', function(e) {
 function createAsteroidBelt() {
     roids = [];
     var x, y;
-    for (var i = 0; i < ROID_NUM + level; i++) {
+    for (var i = 0; i < ROID_NUM + level + 1; i++) {
         // random asteroid location (not touching spaceship)
         do {
             x = Math.floor(Math.random() * canv.width);
@@ -138,7 +138,7 @@ function createAsteroidBelt() {
         } while (distBetweenPoints(ship.x, ship.y, x, y) < ROID_SIZE * 2 + ship.r);
         roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 2)));
     }
-    ROID_NUM = ROID_NUM + level;
+    ROID_NUM = ROID_NUM + level + 1;
     roidNum.innerHTML = ROID_NUM;
 }
 
@@ -505,7 +505,7 @@ function update() {
         if (ship.lasers[i].explodeTime == 0) {
             ctx.fillStyle = "salmon";
             ctx.beginPath();
-            ctx.arc(ship.lasers[i].x, ship.lasers[i].y, SHIP_SIZE / 15, 0, Math.PI * 2, false);
+            ctx.arc(ship.lasers[i].x, ship.lasers[i].y, SHIP_SIZE / 10 , 0, Math.PI * 2, false);
             ctx.fill();
         } else {
             // draw the explosion
