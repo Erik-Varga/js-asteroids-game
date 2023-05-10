@@ -130,7 +130,7 @@ $("#thrust").on('mouseup', function(e) {
 function createAsteroidBelt() {
     roids = [];
     var x, y;
-    for (var i = 0; i < ROID_NUM + level + 1; i++) {
+    for (var i = 0; i < ROID_NUM + level + 2; i++) {
         // random asteroid location (not touching spaceship)
         do {
             x = Math.floor(Math.random() * canv.width);
@@ -138,7 +138,7 @@ function createAsteroidBelt() {
         } while (distBetweenPoints(ship.x, ship.y, x, y) < ROID_SIZE * 2 + ship.r);
         roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 2)));
     }
-    ROID_NUM = ROID_NUM + level + 1;
+    ROID_NUM = ROID_NUM + level + 2;
     roidNum.innerHTML = ROID_NUM;
 }
 
