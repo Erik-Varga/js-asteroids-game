@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,600;1,700&family=Poppins&family=Quicksand&family=Raleway&family=Roboto&family=Nanum+Gothic+Coding:wght@400;700&&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,600;1,700&family=Poppins&family=Quicksand&family=Raleway&family=Righteous&family=Roboto&family=Nanum+Gothic+Coding:wght@400;700&&family=Space+Mono:wght@400;700&display=swap');
 
 
 :root {
   /* --font: 'Roboto'; */
   --font: 'Space Mono', monospace;
   --font: 'Nanum Gothic Coding', monospace;
+  --backgroundColor: #2f363e;
+  --textColor: white;
 }
 
 * {
@@ -20,7 +22,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: 5px;
-  background: #2f363e;
+  background: var(--backgroundColor);
 }
 
 .wrapper {
@@ -28,7 +30,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  color: white;
+  color: var(--textColor);
 
 }
 .title {
@@ -122,6 +124,13 @@ body {
   font-size: 2rem;
   color: red;
   animation: blinker 1s linear infinite;
+}
+
+#newGame {
+  font-size: 1rem;
+  width: 200px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 @keyframes blinker {

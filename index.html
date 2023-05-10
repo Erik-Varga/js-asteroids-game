@@ -33,9 +33,6 @@
             <span> x </span><span id="screenY">0</span>
           </small>
         </span>
-        
-        <!-- <span>Speed =</span><span id="roidSpeed"></span> -->
-        
       </span>
 
     </div>
@@ -46,22 +43,25 @@
           <div class="btnControls">
             <div class="leftBtnBox">
               <!-- Left -->
-                <span class="btn"><i id="left" class="fa-regular fa-circle-left" 
-                  ontouchstart="leftBtn()" ontouchend="stopBtn()"></i></i></span>
-              <!-- Right -->
+              <span class="btn"><i id="left" class="fa-regular fa-circle-left" 
+                ontouchstart="leftBtn()" ontouchend="stopBtn()"></i></i></span>
+                <!-- Right -->
                 <span class="btn"><i id="right" class="fa-regular fa-circle-right" 
                   ontouchstart="rightBtn()" ontouchend="stopBtn()"></i></i></span>
-            </div>
+                </div>
 
-            <div class="settings">
-              <!-- Astornaut -->
-              <small>
-                  <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
-                  <span>x=</span><span id="shipX">0</span>
-                  <span>y=</span><span id="shipY">0</span>
-                  <span>num=</span><span id="roidNum"></span> 
-              </small>
-            </div>
+                <div class="settings">
+                  <small><button class="gameBtn" id="newGame" onclick="newGame()">NEW GAME</button></small>
+                  <!-- Astornaut -->
+                  <small>
+                    <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
+                    <span>x:</span><span id="shipX">0</span>
+                    <span>y:</span><span id="shipY">0</span>
+                    <span>Level:</span><span id="levelNum"></span>
+                    <span>Asteroids:</span><span id="roidNum"></span>
+          
+                </small>
+              </div>
 
             <div class="rightBtnBox">
               <!-- Fire -->
