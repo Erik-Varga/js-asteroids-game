@@ -32,6 +32,8 @@
             <span>&nbsp;&nbsp;</span><span id="screenX">0</span>
             <span> x </span><span id="screenY">0</span>
           </small>
+          &nbsp;<i class="fa-solid fa-satellite"></i>
+          &nbsp;<i class="fa-solid fa-moon"></i>
         </span>
       </span>
 
@@ -53,21 +55,22 @@
                 <div class="settings">
                   <small><button class="gameBtn" id="newGame" onclick="newGame()">NEW GAME</button></small>
                   <!-- Astornaut -->
+                  <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i>&nbsp;<span id="gameLives">0</span></span>
                   <small>
-                    <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i></span>
                     <span>x:</span><span id="shipX">0</span>
                     <span>y:</span><span id="shipY">0</span>
                     <span>Level:</span><span id="levelNum"></span>
                     <span>Asteroids:</span><span id="roidNum"></span>
+                    
           
                 </small>
               </div>
 
             <div class="rightBtnBox">
               <!-- Fire -->
-              <span class="btn"><i id="fire" class="fa-solid fa-gun" ontouchstart="fireBtn()"></i></span>
+              <span class="btn"><i id="fire" class="fa-solid fa-gun" ontouchstart="fireBtn()" ontouchend="fireBtn()"></i></span>
               <!-- Thrust -->
-              <span class="btn"><i id="thrust" class="fa-solid fa-circle-chevron-up"ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></span>
+              <span class="btn"><i id="thrust" class="fa-solid fa-circle-chevron-up" ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></span>
             </div>
           </div>
 

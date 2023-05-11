@@ -1,5 +1,6 @@
 // Variables
-let ROID_NUM = 1; // starting number of asteroids in pixels per second
+const STARTING_ROID_NUM = 1; // starting number of asteroids in pixels per second
+let ROID_NUM = STARTING_ROID_NUM; 
 let GAME_LIVES = 3; // starting number of lives
 
 const FPS = 30; // frames per second
@@ -9,9 +10,13 @@ const LASER_EXPLODE_DUR = 0.1; // duration of the lasers' explosion in seconds
 const LASER_MAX = 10; // maximum number of lasers on screen at once
 const LASER_SPD = 500; // speed of lasers in pixels per second
 const ROID_JAG = 0.4; // jaggedness of the asteroids (0 = none, 1 = lots)
+const ROID_PTS_LGE = 20; // points scored for large asteroid
+const ROID_PTS_MED = 50; // points scored for medium asteroid
+const ROID_PTS_SM = 100; // points scored for small asteroid
 const ROID_SIZE = 100; // starting size of asteroids in pixels
 const ROID_SPD = 50; // max starting speed of asteroids in pixels per second
 const ROID_VERT = 10; // average number of vertices on each asteroid
+const SAVE_KEY_SCORE = "highscore"; // save key for local storage of high score
 const SHIP_BLINK_DUR = 0.3; // duration of the ship's blink during invisibility in seconds
 const SHIP_EXPLODE_DUR = 0.3; // duration of the ship's explosion in seconds
 const SHIP_INV_DUR = 4; // duration of the ship's invisibility in seconds
@@ -20,11 +25,14 @@ const SHIP_THRUST = 5; // acceleration of the ship in pixels per second per seco
 const SHIP_TURN_SPD = 360; // turn speed in degrees per second
 const SHOW_BOUNDING = false; // show or hide collision bounding
 const SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
+const MUSIC_ON = true; // 
+const SOUND_ON = true; // 
 const TEXT_FADE_TIME = 3.5; // text fade time in seconds
 const TEXT_SIZE = 40; // text font height in pixels
 
 const roidNum = document.getElementById('roidNum');
 const level_num = document.getElementById('levelNum');
+const game_lives = document.getElementById('gameLives');
 
 let ship_x = document.getElementById('shipX');
 let ship_y = document.getElementById('shipY');
@@ -39,16 +47,27 @@ let new_game = document.getElementById('newGame');
 var canv = document.getElementById('gameCanvas');
 canv.width = document.body.clientWidth;
 canv.height = window.innerHeight;
-canv.height -= 195;
+canv.height -= 210;
 
 screen_x.innerHTML = parseInt(document.body.clientWidth);
 screen_y.innerHTML = parseInt(window.innerHeight);
 
 var ctx = canv.getContext('2d');
 
-// setup the game parameters
-var level, lives, roids, ship, text, textAlpha;
+// set up sound effects
+var fxBangLarge = new Sound("sounds/bangLarge.m4a", 7, 0.4);
+var fxBangMedium = new Sound("sounds/bangMedium.m4a", 7, 0.4);
+var fxBangSmall = new Sound("sounds/bangSmall.m4a", 7, 0.4);
+var fxFire = new Sound("sounds/fire.m4a", 7, 0.4);
+var fxThrust = new Sound("sounds/thrust.m4a", 7, 0.4);
+
+// set up the game parameters
+var level, lives, roids, score, highScore, ship, text, textAlpha;
 newGame();
+
+// set up the music
+var music = new Music("sounds/beat1.m4a", "sounds/beat2.m4a");
+var roidsLeft, roidsTotal;
 
 // set up event handlers
 document.addEventListener("keydown", keyDown);
@@ -80,6 +99,10 @@ function fireBtn() {
 
 function thrustBtn() {
     ship.thrusting = true;
+}
+
+function endThrustBtn() {
+    ship.thrusting = false;
 }
 
 // astronaut flashes when ship explodes
@@ -116,7 +139,7 @@ $("#fire").on('mousedown', function(e) {
 });
 
 $("#fire").on('mouseup', function(e) {
-    return;
+    shootLaser();
 });
 
 $("#thrust").on('mousedown', function(e) {
@@ -129,6 +152,8 @@ $("#thrust").on('mouseup', function(e) {
 
 function createAsteroidBelt() {
     roids = [];
+    roidsTotal = (ROID_NUM + level) * 7;
+    roidsLeft = roidsTotal;
     var x, y;
     for (var i = 0; i < ROID_NUM + level + 2; i++) {
         // random asteroid location (not touching spaceship)
@@ -149,19 +174,35 @@ function destroyAsteroid(index) {
 
     // split the asteroid in two if necessary
     if (r == Math.ceil(ROID_SIZE / 2)) { // large asteroid
-        ROID_NUM = ROID_NUM + 1;
+        fxBangLarge.play();
+        ROID_NUM++;
         roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 4)));
         roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 4)));
+        score += ROID_PTS_LGE;
     } else if (r == Math.ceil(ROID_SIZE / 4)) { // medium asteroid
-        ROID_NUM = ROID_NUM + 1;
+        fxBangMedium.play();
+        ROID_NUM++;
         roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 8)));
         roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 8)));
+        score += ROID_PTS_MED;
     } else if (r == Math.ceil(ROID_SIZE / 8)) { // small asteroid
-        ROID_NUM = ROID_NUM - 1;
+        fxBangSmall.play();
+        ROID_NUM--;
+        score += ROID_PTS_SM;
+    }
+
+    // check high score
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem(SAVE_KEY_SCORE, highScore);
     }
     
     // destroy the asteroid
     roids.splice(index, 1);
+
+    // calculate the ratio of remaining asteroids to determine music tempo
+    roidsLeft--;
+    music.setAsteroidRatio(roidsLeft == 0 ? 1 : roidsLeft/ roidsTotal);
 
     // update asteroid total in control panel
     roidNum.innerHTML = ROID_NUM;
@@ -186,6 +227,7 @@ function explodeShip() {
     // ctx.stroke();
 
     ship.explodeTime = Math.ceil(SHIP_EXPLODE_DUR * FPS);
+    // fxExplode.play();
     astronaut_flash();
 }
 
@@ -262,12 +304,24 @@ function newAsteroid(x, y, r) {
 }
 
 function newGame() {
+    // reset variables
     level = 0;
+    score = 0;
+    ROID_NUM = STARTING_ROID_NUM;
     lives = GAME_LIVES;
+    game_lives.innerHTML = lives;
+
     // setup the spaceship object
     ship = newShip();
+    
+    // get high score from local storage
+    var scoreStr = localStorage.getItem(SAVE_KEY_SCORE);
+    scoreStr == null ? highScore = 0 : highScore = parseInt(scoreStr);
+    
     // setup new level
     newLevel();
+
+    // set NEW GAME button to invisible
     new_game.classList.add('invisible');
 }
 
@@ -332,10 +386,64 @@ function shootLaser(){
             dist: 0,
             explodeTime: 0
         });
+        fxFire.play();
     }
  
     // prevent further shooting
     ship.canShoot = false;
+}
+
+function Music(srcLow, srcHigh) {
+    this.soundLow = new Audio(srcLow);
+    this.soundHigh = new Audio(srcHigh);
+    this.low = true;
+    this.tempo = 1.0; // seconds per beat
+    this.beatTime = 0; // frames left until next beat
+
+    this.play = function() {
+        if (MUSIC_ON) {
+            if (this.low) {
+                this.soundLow.play();
+            } else {
+                this.soundHigh.play();
+            }
+            this.low = !this.low;
+        }
+    }
+
+    this.tick = function() {
+        if (this.beatTime == 0) {
+            this.play();
+            this.beatTime = Math.ceil(this.tempo *FPS);
+        } else {
+            this.beatTime--;
+        }
+    }
+
+    this.setAsteroidRatio = function(ratio) {
+        this.tempo = 1.0 - 0.75 * (1.0 - ratio);
+    }
+}
+
+function Sound(src, maxStreams = 1, vol = 1.0) {
+    this.streamNum = 0;
+    this.streams = [];
+    for (let i = 0; i < maxStreams; i++) {
+        this.streams.push(new Audio(src));
+        this.streams[i].volume = vol;    
+    }
+    this.play = function() {
+        if (SOUND_ON) {
+            this.streamNum = (this.streamNum + 1) % maxStreams;
+            this.streams[this.streamNum].play();
+        }
+    }
+
+    this.stop = function() {
+        this.streams[this.streamNum].pause();
+        this.streams[this.streamNum].currentTime = 0;
+        
+    }
 }
 
 function update() {
@@ -344,6 +452,9 @@ function update() {
     
     // ship is exploding
     var exploding = ship.explodeTime > 0;
+
+    // tick the music
+    music.tick();
 
     // draw space
     ctx.fillStyle = "black";
@@ -376,10 +487,12 @@ function update() {
             ctx.fill();
             ctx.stroke();
         }
+        
     } else {
         // apply friction (slow the ship down when not thrusting)
         ship.thrust.x -= FRICTION * ship.thrust.x / FPS;
         ship.thrust.y -= FRICTION * ship.thrust.y / FPS;
+        fxThrust.stop();
     }
 
     // draw the triangular ship
@@ -536,12 +649,26 @@ function update() {
         new_game.classList.remove('invisible');
     }
 
-    // draw the ship lives
+    // draw the lives
     var lifeColor;
     for (let i = 0; i < lives; i++) {
         lifeColor = exploding && i == lives - 1 ? "red" : "white";
         drawShip(SHIP_SIZE + i * SHIP_SIZE * 1.2, SHIP_SIZE, 0.5 * Math.PI, lifeColor);
     }
+
+    // draw the score
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.font = TEXT_SIZE + "px 'Righteous', cursive";
+    ctx.fillText(score, canv.width - SHIP_SIZE / 2, SHIP_SIZE);
+
+    // draw the high score
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.font = (TEXT_SIZE * 0.5) + "px 'Righteous', cursive";
+    ctx.fillText('High Score: ' + highScore, canv.width / 2, SHIP_SIZE);
 
     // detect laser hits on asteroids
     var ax, ay, ar, lx, ly;
@@ -605,6 +732,7 @@ function update() {
             // astronaut flash
             setTimeout(astronaut_solid, 3000);
             lives--;
+            game_lives.innerHTML = lives;
             if (lives == 0) {
                 gameOver();
             } else {
