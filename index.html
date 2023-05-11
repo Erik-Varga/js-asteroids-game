@@ -55,14 +55,20 @@
                 <div class="settings">
                   <small><button class="gameBtn" id="newGame" onclick="newGame()">NEW GAME</button></small>
                   <!-- Astornaut -->
-                  <span><i id="astronaut" class="fa-solid fa-user-astronaut"></i>&nbsp;<span id="gameLives">0</span></span>
-                  <small>
-                    <span>x:</span><span id="shipX">0</span>
-                    <span>y:</span><span id="shipY">0</span>
-                    <span>Level:</span><span id="levelNum"></span>
-                    <span>Asteroids:</span><span id="roidNum"></span>
-                    
-          
+                  <small><i id="astronaut" class="fa-solid fa-user-astronaut"></i>&nbsp;<span id="gameLives">0</span>
+                  &nbsp;
+                    <input type="checkbox" id="music" name="music" value="Music" checked>
+                    <label for="music"> Music</label>
+                    <input type="checkbox" id="sound" name="sound" value="Sound" checked>
+                    <label for="sound"> Sound</label>
+                  </small>
+                </span>
+
+                <small>
+                  <span>x:</span><span id="shipX">0</span>
+                  <span>y:</span><span id="shipY">0</span>
+                  <span>Level:</span><span id="levelNum"></span>
+                  <span>Asteroids:</span><span id="roidNum"></span>
                 </small>
               </div>
 

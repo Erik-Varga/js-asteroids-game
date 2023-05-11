@@ -25,10 +25,12 @@ const SHIP_THRUST = 5; // acceleration of the ship in pixels per second per seco
 const SHIP_TURN_SPD = 360; // turn speed in degrees per second
 const SHOW_BOUNDING = false; // show or hide collision bounding
 const SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
-const MUSIC_ON = true; // 
-const SOUND_ON = true; // 
+let MUSIC_ON = true; // 
+let SOUND_ON = true; // 
 const TEXT_FADE_TIME = 3.5; // text fade time in seconds
 const TEXT_SIZE = 40; // text font height in pixels
+
+const SAUCER_SIZE = 25; // ship height in pixels
 
 const roidNum = document.getElementById('roidNum');
 const level_num = document.getElementById('levelNum');
@@ -61,13 +63,14 @@ var fxBangSmall = new Sound("sounds/bangSmall.m4a", 7, 0.4);
 var fxFire = new Sound("sounds/fire.m4a", 7, 0.4);
 var fxThrust = new Sound("sounds/thrust.m4a", 7, 0.4);
 
-// set up the game parameters
-var level, lives, roids, score, highScore, ship, text, textAlpha;
-newGame();
-
 // set up the music
 var music = new Music("sounds/beat1.m4a", "sounds/beat2.m4a");
 var roidsLeft, roidsTotal;
+
+// set up the game parameters
+var level, lives, roids, score, highScore, ship, text, textAlpha;
+newGame();
+ 
 
 // set up event handlers
 document.addEventListener("keydown", keyDown);
@@ -149,6 +152,17 @@ $("#thrust").on('mousedown', function(e) {
 $("#thrust").on('mouseup', function(e) {
     ship.thrusting = false;
 });
+
+$("#music").on('click', function(e) {
+    MUSIC_ON = !MUSIC_ON;
+    console.log(MUSIC_ON);
+});
+
+$("#sound").on('click', function(e) {
+    SOUND_ON = !SOUND_ON;
+    console.log(SOUND_ON);
+});
+
 
 function createAsteroidBelt() {
     roids = [];
@@ -235,6 +249,7 @@ function gameOver() {
     ship.dead = true;
     text = "GAME OVER";
     textAlpha = 1.0;
+    music.stop();
 }
 
 // Keys
@@ -401,7 +416,7 @@ function Music(srcLow, srcHigh) {
     this.beatTime = 0; // frames left until next beat
 
     this.play = function() {
-        if (MUSIC_ON) {
+        if (!ship.dead && MUSIC_ON) {
             if (this.low) {
                 this.soundLow.play();
             } else {
@@ -409,6 +424,12 @@ function Music(srcLow, srcHigh) {
             }
             this.low = !this.low;
         }
+    }
+
+    this.stop = function() {
+        console.log('FJB')
+        this.soundLow.pause();
+        this.soundHigh.pause();
     }
 
     this.tick = function() {
@@ -419,7 +440,7 @@ function Music(srcLow, srcHigh) {
             this.beatTime--;
         }
     }
-
+    
     this.setAsteroidRatio = function(ratio) {
         this.tempo = 1.0 - 0.75 * (1.0 - ratio);
     }
@@ -442,7 +463,6 @@ function Sound(src, maxStreams = 1, vol = 1.0) {
     this.stop = function() {
         this.streams[this.streamNum].pause();
         this.streams[this.streamNum].currentTime = 0;
-        
     }
 }
 
@@ -464,6 +484,7 @@ function update() {
     if (ship.thrusting && !ship.dead) {
         ship.thrust.x += SHIP_THRUST * Math.cos(ship.a) / FPS;
         ship.thrust.y -= SHIP_THRUST * Math.sin(ship.a) / FPS;
+        fxThrust.play();
 
         // draw the thruster
         if (!exploding && blinkOn) {
@@ -824,3 +845,4 @@ function update() {
         }
     }
 }
+
