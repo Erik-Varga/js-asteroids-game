@@ -32,7 +32,6 @@
             <span>&nbsp;&nbsp;</span><span id="screenX">0</span>
             <span> x </span><span id="screenY">0</span>
           </small>
-          &nbsp;<i class="fa-solid fa-satellite"></i>
           &nbsp;<i class="fa-solid fa-moon"></i>
         </span>
       </span>
@@ -51,31 +50,17 @@
                 <span class="btn"><i id="right" class="fa-regular fa-circle-right" 
                   ontouchstart="rightBtn()" ontouchend="stopBtn()"></i></i></span>
                 </div>
-
-                <div class="settings">
-                  <small><button class="gameBtn" id="newGame" onclick="newGame()">NEW GAME</button></small>
-                  <!-- Astornaut -->
-                  <small><i id="astronaut" class="fa-solid fa-user-astronaut"></i>&nbsp;<span id="gameLives">0</span>
-                  &nbsp;
-                    <span id="musicBtn">
-                      Enable:
-                      <input type="checkbox" id="music" name="music" value="Music">
-                      <label for="music"> Music</label>
-                      <input type="checkbox" id="sound" name="sound" value="Sound">
-                      <label for="sound"> Sound</label>
-                    </span>
-                  </small>
+            </div>
+            <div>
+              <span>
+                <!-- Astornaut -->
+                <small><i id="astronaut" class="fa-solid fa-user-astronaut"></i>
                 </span>
-
-                <small>
-                  <span>x:</span><span id="shipX">0</span>
-                  <span>y:</span><span id="shipY">0</span>
-                  <span>Level:</span><span id="levelNum"></span>
-                  <span>Asteroids:</span><span id="roidNum"></span>
-                  <span>+<span id="extraLifeCount">0</span>
-                </small>
-              </div>
-
+              <span>
+                <!-- Game Lives -->
+                <span id="gameLives">0</span></small></span>
+              </span>
+            </div>
             <div class="rightBtnBox">
               <!-- Fire -->
               <span class="btn"><i id="fire" class="fa-solid fa-gun" ontouchstart="fireBtn()" ontouchend="fireBtn()"></i></span>
@@ -83,27 +68,45 @@
               <span class="btn"><i id="thrust" class="fa-solid fa-circle-chevron-up" ontouchstart="thrustBtn()" ontouchend="endThrustBtn()"></i></span>
             </div>
           </div>
-
-          <footer>
-            <div class="version">
-              <span>
-                <small>
-                  <a href="https://github.com/Erik-Varga/js-asteroids-game/" target="_blank">
-                    Source Code: </a> 
-                    v1.5
-                  <!-- <a href="https://github.com/Erik-Varga" target="_blank"> -->
-                    &copy; <script>document.write(new Date().getFullYear())</script> Erik Varga | Web Developer <i class="fa-brands fa-github"></i>
-                  <!-- </a> -->
-                </small>
-              </span>
-            </div>
-          </footer>
-
         </div>
-        <div>
+        <div class="settings">
+          <div>
+            <small>
+              <span>x:</span><span id="shipX">0</span>
+              <span>y:</span><span id="shipY">0</span>
+              <span>Level:</span><span id="levelNum"></span>
+              <span>Asteroids:</span><span id="roidNum"></span>
+              <button class="gameBtn" id="newGame" onclick="newGame()">NEW GAME</button>
+            </small>
+          </div>
+          <div>
+            <i class="fa-solid fa-gears"></i>
+            <span id="settingsBar">  
+              <input type="checkbox" id="music" name="music" value="Music">
+              <label id="musicLbl" for="music"> Music</label>
+              <input type="checkbox" id="sound" name="sound" value="Sound">
+              <label for="sound"> Sound</label>
+              <small><button class="gameBtn" id="clearHS" onclick="clearHS()">CLEAR HIGH SCORE</button></small>
+            </span>
+          </div>
         </div>
+      </div>
     </div>
     
+    <footer>
+      <div class="version">
+        <span>
+          <small>
+            <a href="https://github.com/Erik-Varga/js-asteroids-game/" target="_blank">
+              Source: </a> 
+              v1.6
+            <!-- <a href="https://github.com/Erik-Varga" target="_blank"> -->
+              &copy; <script>document.write(new Date().getFullYear())</script> Erik Varga | Web Developer <i class="fa-brands fa-github"></i>
+            <!-- </a> -->
+          </small>
+        </span>
+      </div>
+    </footer>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 

@@ -1,9 +1,9 @@
 // Variables
-const STARTING_ROID_NUM = 1; // starting number of asteroids in pixels per second
+const STARTING_ROID_NUM = 1; // starting number of asteroids
 let ROID_NUM = STARTING_ROID_NUM; 
-let GAME_LIVES =3; // starting number of lives
+let GAME_LIVES = 3; // starting number of lives
 
-let QUALIFIER = 5000;
+let QUALIFIER = 7000;
 let increment_qualifier = 1;
 
 const FPS = 30; // frames per second
@@ -45,7 +45,6 @@ let screen_x = document.getElementById('screenX');
 let screen_y = document.getElementById('screenY');
 let new_game = document.getElementById('newGame');
 let xl_count = document.getElementById('extraLifeCount');
-
 
 // Canvas
 
@@ -91,15 +90,19 @@ let total_qualifier;
 
 function checkBonus() {
     total_qualifier = QUALIFIER * increment_qualifier;
-    console.log(total_qualifier);
     if (score >= total_qualifier) {
         lives++;
         increment_qualifier++;
+        text = "Extra Ship added!";
         fxExtraShip.play();
         xl_count.innerHTML = increment_qualifier;
     }
 }
 
+function clearHS() {
+    highScore = 0;
+    localStorage.setItem(SAVE_KEY_SCORE, highScore);
+}
 
 // Ship Buttons
 
@@ -174,12 +177,10 @@ $("#thrust").on('mouseup', function(e) {
 
 $("#music").on('click', function(e) {
     MUSIC_ON = !MUSIC_ON;
-    console.log(MUSIC_ON);
 });
 
 $("#sound").on('click', function(e) {
     SOUND_ON = !SOUND_ON;
-    console.log(SOUND_ON);
 });
 
 
@@ -235,7 +236,7 @@ function destroyAsteroid(index) {
 
     // calculate the ratio of remaining asteroids to determine music tempo
     roidsLeft--;
-    music.setAsteroidRatio(roidsLeft == 0 ? 1 : roidsLeft/ roidsTotal);
+    music.setAsteroidRatio(roidsLeft == 0 ? 1 : roidsLeft / roidsTotal);
 
     // update asteroid total in control panel
     roidNum.innerHTML = ROID_NUM;
@@ -344,7 +345,7 @@ function newGame() {
     ROID_NUM = STARTING_ROID_NUM;
     lives = GAME_LIVES;
     game_lives.innerHTML = lives;
-
+    
     // setup the spaceship object
     ship = newShip();
     
@@ -362,6 +363,7 @@ function newGame() {
 function newLevel() {
     text = "Level " + level;
     textAlpha = 1.0
+
     // set up asteroids
     createAsteroidBelt();
     level_num.innerHTML = level;
@@ -431,7 +433,7 @@ function Music(srcLow, srcHigh) {
     this.soundLow = new Audio(srcLow);
     this.soundHigh = new Audio(srcHigh);
     this.low = true;
-    this.tempo = 1.0; // seconds per beat
+    this.tempo = 0.5; // seconds per beat
     this.beatTime = 0; // frames left until next beat
 
     this.play = function() {
@@ -610,7 +612,8 @@ function update() {
         
         // asteroid color
         ctx.strokeStyle = "slategrey";
-        ctx.lineWidth = SHIP_SIZE / 20;
+        ctx.fillStyle = "rgba(0,0,0,0.9";
+        ctx.lineWidth = SHIP_SIZE / 10   ;
 
         // get the asteroid properties
         a = roids[i].a;
@@ -635,6 +638,7 @@ function update() {
             );
         }
         ctx.closePath();
+        ctx.fill();
         ctx.stroke();
 
         // create collision boundaries - asteroid
@@ -708,8 +712,8 @@ function update() {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "white";
-    ctx.font = (TEXT_SIZE * 0.5) + "px 'Righteous', cursive";
-    ctx.fillText('High Score: ' + highScore, canv.width - 95, SHIP_SIZE + 55);
+    ctx.font = (TEXT_SIZE * 0.4) + "px 'Righteous', cursive";
+    ctx.fillText('High Score: ' + highScore, canv.width - 75, SHIP_SIZE + 55);
 
     // detect laser hits on asteroids
     var ax, ay, ar, lx, ly;

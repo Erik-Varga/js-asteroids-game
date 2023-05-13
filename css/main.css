@@ -53,17 +53,20 @@ body {
   border-radius: 5px
 }
 
-.controls,
-.btnControls {
+.controls {
   font-size: 2rem;
   color: whitesmoke;
   margin: 0;
-  margin-top: 5px;
+  /* margin-top: 5px; */
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;  
   align-items: center;
+}
+
+.btnControls {
+  font-size: 2rem;
 }
 
 .leftBtnBox,
@@ -101,54 +104,56 @@ body {
 
 .settings {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid transparent;
+  color: whitesmoke;
 }
 
 .settings {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .settings .btn {
   color: #212325;
 }
 
-.settings #astronaut {
-  font-size: 2rem;
+#astronaut {
+  font-size: 1.5rem;
 }
 
 .astronaut {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: red;
   animation: blinker 1s linear infinite;
 }
 
-#musicBtn{
-  color: grey;
+#settingsBar {
+  color: rbga(255,255,255, 0.8);
+  padding: 10px;
 }
 
 #bonus {
   font-size: 0.9rem;
 }
 
-#newGame {
-  font-size: 1rem;
-  width: 200px;
-  margin: 5px;
-  padding: 5px;
+.gameBtn {
+  padding: 2px;
   border-radius: 5px;
 }
 
 #gameLives {
-  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 @keyframes blinker {
   50% {
     opacity: 0;
   }
+}
+
+.hidden {
+  display: none;
 }
 
 footer {
