@@ -35,8 +35,10 @@ let SAUCER_THRUST = 0; // acceleration of the saucer in pixels per second
 
 var xDir = -150;
 var yDir = getRandomInt(1, 1000);
-var GRID_SIZE = getRandomInt(2, 7);
-SAUCER_THRUST = getRandomInt(2, 7);
+var yDir_random = 0;
+var saucer_boundaries = 300;
+var GRID_SIZE = getRandomInt(2, 17);
+SAUCER_THRUST = getRandomInt(2, 17);
 
 var SAUCER_DIRECTION = true;
 
@@ -54,6 +56,10 @@ const game_lives = document.getElementById('gameLives');
 
 let ship_x = document.getElementById('shipX');
 let ship_y = document.getElementById('shipY');
+let saucer_x = document.getElementById('saucerX');
+let saucer_y = document.getElementById('saucerY');
+let yDirRnd = document.getElementById('yDirRnd');
+
 let screen_x = document.getElementById('screenX');
 let screen_y = document.getElementById('screenY');
 let new_game = document.getElementById('newGame');
@@ -73,6 +79,10 @@ screen_y.innerHTML = parseInt(window.innerHeight);
 var ctx = canv.getContext('2d');
 
 // set up sound effects
+
+var fxSaucerBig = new Sound("sounds/saucerBig.m4a", 0.5, 0.1);
+var fxSaucerSmall = new Sound("sounds/saucerSmall.m4a", 0.5, 0.1);
+
 var fxBangLarge = new Sound("sounds/bangLarge.m4a", 7, 0.4);
 var fxBangMedium = new Sound("sounds/bangMedium.m4a", 7, 0.4);
 var fxBangSmall = new Sound("sounds/bangSmall.m4a", 7, 0.4);
@@ -105,6 +115,18 @@ function getRandomInt(min, max) {
     return Math.ceil(Math.random() * (max - min) + min);
 }
 
+const yVariation = [-4, -3, -2, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4];
+
+function randomYDir(){
+    const randomIndex = Math.floor(Math.random() * yVariation.length);
+    yDir_random = yVariation[randomIndex];
+    yDirRnd.innerHTML = yDir_random;
+}
+
+setInterval(()=>{
+    randomYDir();
+}, 3000)
+
 function checkBonus() {
     total_qualifier = QUALIFIER * increment_qualifier;
     if (score >= total_qualifier) {
@@ -119,6 +141,7 @@ function clearHS() {
     highScore = 0;
     localStorage.setItem(SAVE_KEY_SCORE, highScore);
 }
+
 
 // Ship Buttons
 
@@ -707,22 +730,20 @@ function update() {
         ctx.stroke();
     }
 
-    // SAUCER
-
-    
+    // SAUCER SECTION
 
     // centre dot
     if (SHOW_SAUCER_DOT) {
         ctx.fillStyle = "red";
         // ctx.fillRect(xDir - 1, yDir - 1, 2, 2);
-        ctx.fillRect(xDir + (GRID_SIZE * 2.5), yDir + (GRID_SIZE * 1.5), 1, 1);
+        ctx.fillRect(xDir + (GRID_SIZE * 10), yDir + (GRID_SIZE * 6), 1, 1);
     }
 
     // create collision boundaries - saucer
     if (SHOW_BOUNDING) {
         ctx.strokeStyle = "lime";
         ctx.beginPath();
-        ctx.arc(xDir + GRID_SIZE * 5, yDir + GRID_SIZE * 3, GRID_SIZE * 4, 0, Math.PI * 2, false);
+        ctx.arc(xDir + (GRID_SIZE * 6), yDir + (GRID_SIZE * 3), saucer.r, 0, Math.PI * 2, false);
         ctx.stroke();
     }
 
@@ -730,43 +751,49 @@ function update() {
     if (saucer.thrusting && !saucer.dead) {
         if (SAUCER_DIRECTION) {
             xDir += SAUCER_THRUST;
-            yDir += 0;
+            yDir += yDir_random; 
         } else {
             xDir -= SAUCER_THRUST;
-            yDir -= 0;
-
+            yDir -= yDir_random;
         }
+        // if (yDir_random == 0) {
+        //     yDir = 0;
+        // }
     };
 
     if (!saucer.dead) {
         drawSaucer(saucer.x, saucer.y, saucer.a);
     }
 
-    if (xDir > canv.width + 200 && SAUCER_DIRECTION) {
+    // if (xDir > 0 && xDir < canv.width) {
+    //     fxSaucerBig.play();
+    // }
+
+    if (xDir > canv.width + saucer_boundaries && SAUCER_DIRECTION) {
         if (SAUCER_DIRECTION) {
             xDir -= SAUCER_THRUST;
-            yDir = getRandomInt(1, screen.height);
+            yDir = getRandomInt(1, screen.height * 0.75);
         } 
-        
         GRID_SIZE = getRandomInt(1, 15);
-        
         SAUCER_DIRECTION = !SAUCER_DIRECTION
-        console.log(GRID_SIZE, SAUCER_DIRECTION, xDir, yDir)
+        // randomYDir()
     }
 
-    if (xDir < -200 && !SAUCER_DIRECTION) {
-        console.log(GRID_SIZE, SAUCER_DIRECTION)
-
+    if (xDir < -saucer_boundaries && !SAUCER_DIRECTION) {
         if (SAUCER_DIRECTION) {
             xDir -= SAUCER_THRUST;
-            yDir = getRandomInt(1, 1000);
-            // xDir = -150;
+            yDir = getRandomInt(1, screen.height * 0.75);
         } 
         GRID_SIZE = getRandomInt(2, 5);
         SAUCER_DIRECTION = !SAUCER_DIRECTION
-        console.log(GRID_SIZE, SAUCER_DIRECTION, xDir, yDir)
+        // randomYDir()
     }
 
+    if (yDir < -saucer_boundaries || yDir > screen.height + saucer_boundaries) {
+        
+        xDir = 0;
+        yDir = 0;
+    }
    
     // draw the asteroids
     var a, r, x, y, offs, vert;
@@ -973,6 +1000,8 @@ function update() {
     // update ship coordinates to screen
     ship_x.innerHTML = parseInt(ship.x);
     ship_y.innerHTML = parseInt(ship.y);
+    saucer_x.innerHTML = parseInt(xDir);
+    saucer_y.innerHTML = parseInt(yDir);
     
     // move the lasers
     for (let i = ship.lasers.length - 1; i >= 0; i--) {
