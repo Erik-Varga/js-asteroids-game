@@ -3,7 +3,7 @@ const STARTING_ROID_NUM = 1; // starting number of asteroids
 let ROID_NUM = STARTING_ROID_NUM; 
 let GAME_LIVES = 3; // starting number of lives
 
-let QUALIFIER = 7000;
+let QUALIFIER = 500;
 let increment_qualifier = 1;
 
 const FPS = 30; // frames per second
@@ -24,10 +24,23 @@ const SHIP_BLINK_DUR = 0.3; // duration of the ship's blink during invisibility 
 const SHIP_EXPLODE_DUR = 0.3; // duration of the ship's explosion in seconds
 const SHIP_INV_DUR = 4; // duration of the ship's invisibility in seconds
 const SHIP_SIZE = 25; // ship height in pixels
-const SHIP_THRUST = 5; // acceleration of the ship in pixels per second per second
+const SHIP_THRUST = 5; // acceleration of the ship in pixels per second
 const SHIP_TURN_SPD = 360; // turn speed in degrees per second
 const SHOW_BOUNDING = false; // show or hide collision bounding
 const SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
+const SHOW_SAUCER_DOT = false; // show or hide saucer's centre dot
+
+const SAUCER_SIZE = 50; // saucer height in pixels
+let SAUCER_THRUST = 0; // acceleration of the saucer in pixels per second
+
+var xDir = -150;
+var yDir = getRandomInt(1, 1000);
+var GRID_SIZE = getRandomInt(2, 7);
+SAUCER_THRUST = getRandomInt(2, 7);
+
+var SAUCER_DIRECTION = true;
+
+
 
 let MUSIC_ON = false; // 
 let SOUND_ON = false; // 
@@ -72,7 +85,7 @@ var music = new Music("sounds/beat1.m4a", "sounds/beat2.m4a");
 var roidsLeft, roidsTotal;
 
 // set up the game parameters
-var level, lives, roids, score, highScore, ship, text, textAlpha;
+var level, lives, roids, score, highScore, ship, saucer, text, textAlpha;
 newGame();
  
 
@@ -88,12 +101,15 @@ setInterval(update, 1000 / FPS);
 
 let total_qualifier;
 
+function getRandomInt(min, max) {
+    return Math.ceil(Math.random() * (max - min) + min);
+}
+
 function checkBonus() {
     total_qualifier = QUALIFIER * increment_qualifier;
     if (score >= total_qualifier) {
         lives++;
         increment_qualifier++;
-        text = "Extra Ship added!";
         fxExtraShip.play();
         xl_count.innerHTML = increment_qualifier;
     }
@@ -232,7 +248,7 @@ function destroyAsteroid(index) {
     }
     
     // destroy the asteroid
-    roids.splice(index, 1);
+    roids.splice(index, 1);000000000000
 
     // calculate the ratio of remaining asteroids to determine music tempo
     roidsLeft--;
@@ -348,6 +364,9 @@ function newGame() {
     
     // setup the spaceship object
     ship = newShip();
+
+    // setup the saucer object
+    saucer = newSaucer();
     
     // get high score from local storage
     var scoreStr = localStorage.getItem(SAVE_KEY_SCORE);
@@ -391,6 +410,29 @@ function newShip() {
     }
 }    
 
+function newSaucer() {
+    return {
+        x: 0,
+        y: 0,
+        r: SAUCER_SIZE / 2,
+        a: 90 / 180 * Math.PI, // convert to radians
+        // blinkNum: Math.ceil(SHIP_INV_DUR / SHIP_BLINK_DUR),
+        // blinkTime: Math.ceil(SHIP_BLINK_DUR * FPS),
+        canShoot: true,
+        dead: false,
+        explodeTime: 0,
+        flightPattern: getRandomInt(2),
+        gridSize: getRandomInt(5),
+        lasers: [],
+        rot: 0,
+        thrusting: true,
+        thrust: {
+            x: 0,
+            y: 0
+        }
+    }
+}
+
 function drawShip(x, y, a, color = "white") {
     ctx.strokeStyle = "white";
     ctx.lineWidth = SHIP_SIZE / 20;
@@ -409,6 +451,65 @@ function drawShip(x, y, a, color = "white") {
     );
     ctx.closePath();
     ctx.stroke();
+}
+
+function drawSaucer(x, y, a, color = "white") {
+    var randomX = Math.floor(Math.random() * innerWidth - 200);
+    var randomY = Math.floor(Math.random() * innerHeight - 200);
+
+    saucer.flightPattern = true;
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = SAUCER_SIZE / 20;
+    ctx.beginPath();
+
+    ctx.moveTo(xDir, yDir);
+    // ctx.rect(xDir, yDir, GRID_SIZE * 10, GRID_SIZE * 6);
+
+    // horizontal level 1
+    ctx.moveTo(xDir + (GRID_SIZE * 4), yDir + (GRID_SIZE * 0));
+    ctx.lineTo(xDir + (GRID_SIZE * 6), yDir + (GRID_SIZE * 0));
+
+    // diagonal up-right
+    ctx.moveTo(xDir + (GRID_SIZE * 4), yDir + (GRID_SIZE * 0));
+    ctx.lineTo(xDir + (GRID_SIZE * 3), yDir + (GRID_SIZE * 2));
+
+    // diagonal up-left
+    ctx.moveTo(xDir + (GRID_SIZE * 6), yDir + (GRID_SIZE * 0));
+    ctx.lineTo(xDir + (GRID_SIZE * 7), yDir + (GRID_SIZE * 2));
+
+    // horizontal level 2
+    ctx.moveTo(xDir + (GRID_SIZE * 7), yDir + (GRID_SIZE * 2));
+    ctx.lineTo(xDir + (GRID_SIZE * 3), yDir + (GRID_SIZE * 2));
+
+    // diagonal up-right
+    ctx.moveTo(xDir + (GRID_SIZE * 0), yDir + (GRID_SIZE * 4));
+    ctx.lineTo(xDir + (GRID_SIZE * 3), yDir + (GRID_SIZE * 2));
+
+    // diagonal up-left
+    ctx.moveTo(xDir + (GRID_SIZE * 10), yDir + (GRID_SIZE * 4));
+    ctx.lineTo(xDir + (GRID_SIZE * 7), yDir + (GRID_SIZE * 2));
+
+    // horizontal level 3
+    ctx.moveTo(xDir + (GRID_SIZE * 10), yDir + (GRID_SIZE * 4));
+    ctx.lineTo(xDir + (GRID_SIZE * 0), yDir + (GRID_SIZE * 4));
+
+    // diagonal down-right
+    ctx.moveTo(xDir + (GRID_SIZE * 0), yDir + (GRID_SIZE * 4));
+    ctx.lineTo(xDir + (GRID_SIZE * 3), yDir + (GRID_SIZE * 6));
+
+    // diagonal down-left
+    ctx.moveTo(xDir + (GRID_SIZE * 10), yDir + (GRID_SIZE * 4));
+    ctx.lineTo(xDir + (GRID_SIZE * 7), yDir + (GRID_SIZE * 6));
+
+    // horizontal level 4
+    ctx.moveTo(xDir + (GRID_SIZE * 7), yDir + (GRID_SIZE * 6));
+    ctx.lineTo(xDir + (GRID_SIZE * 3), yDir + (GRID_SIZE * 6));
+
+    ctx.strokeStyle = "whitesmoke";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
 }
 
 function shootLaser(){
@@ -606,6 +707,67 @@ function update() {
         ctx.stroke();
     }
 
+    // SAUCER
+
+    
+
+    // centre dot
+    if (SHOW_SAUCER_DOT) {
+        ctx.fillStyle = "red";
+        // ctx.fillRect(xDir - 1, yDir - 1, 2, 2);
+        ctx.fillRect(xDir + (GRID_SIZE * 2.5), yDir + (GRID_SIZE * 1.5), 1, 1);
+    }
+
+    // create collision boundaries - saucer
+    if (SHOW_BOUNDING) {
+        ctx.strokeStyle = "lime";
+        ctx.beginPath();
+        ctx.arc(xDir + GRID_SIZE * 5, yDir + GRID_SIZE * 3, GRID_SIZE * 4, 0, Math.PI * 2, false);
+        ctx.stroke();
+    }
+
+    // thrust the saucer
+    if (saucer.thrusting && !saucer.dead) {
+        if (SAUCER_DIRECTION) {
+            xDir += SAUCER_THRUST;
+            yDir += 0;
+        } else {
+            xDir -= SAUCER_THRUST;
+            yDir -= 0;
+
+        }
+    };
+
+    if (!saucer.dead) {
+        drawSaucer(saucer.x, saucer.y, saucer.a);
+    }
+
+    if (xDir > canv.width + 200 && SAUCER_DIRECTION) {
+        if (SAUCER_DIRECTION) {
+            xDir -= SAUCER_THRUST;
+            yDir = getRandomInt(1, screen.height);
+        } 
+        
+        GRID_SIZE = getRandomInt(1, 15);
+        
+        SAUCER_DIRECTION = !SAUCER_DIRECTION
+        console.log(GRID_SIZE, SAUCER_DIRECTION, xDir, yDir)
+    }
+
+    if (xDir < -200 && !SAUCER_DIRECTION) {
+        console.log(GRID_SIZE, SAUCER_DIRECTION)
+
+        if (SAUCER_DIRECTION) {
+            xDir -= SAUCER_THRUST;
+            yDir = getRandomInt(1, 1000);
+            // xDir = -150;
+        } 
+        GRID_SIZE = getRandomInt(2, 5);
+        SAUCER_DIRECTION = !SAUCER_DIRECTION
+        console.log(GRID_SIZE, SAUCER_DIRECTION, xDir, yDir)
+    }
+
+   
     // draw the asteroids
     var a, r, x, y, offs, vert;
     for (var i = 0; i < roids.length; i++) {
@@ -761,12 +923,20 @@ function update() {
             }
         }
     
-    // rotate the ship
-    ship.a += ship.rot;
+        if (ship.blinkNum == 0 && !ship.dead) {
+            if (distBetweenPoints(ship.x, ship.y, xDir, yDir) < ship.r + saucer.r) {
+                explodeShip();
+                destroySaucer();
+            }
+            
+        }
+    
+        // rotate the ship
+        ship.a += ship.rot;
 
-    // move the ship
-    ship.x += ship.thrust.x;
-    ship.y += ship.thrust.y;
+        // move the ship
+        ship.x += ship.thrust.x;
+        ship.y += ship.thrust.y;
 
     } else {
        
